@@ -14,8 +14,8 @@ use snafu::ResultExt;
 use crate::{
     NaifId,
     constants::{
-        frames::{EARTH_J2000, SUN_J2000},
-        orientations::J2000,
+        frames::{EARTH_ICRS, SUN_ICRS},
+        orientations::ICRS,
     },
     errors::{AlmanacError, AlmanacResult, EphemerisSnafu, OrientationSnafu, PhysicsError},
     math::{Vector3, cartesian::CartesianState, units::LengthUnit},
@@ -76,7 +76,7 @@ impl Almanac {
         state = if state.frame.orient_origin_match(observer_frame) {
             state
         } else {
-            self.rotate_to(state, state.frame.with_orient(J2000))
+            self.rotate_to(state, state.frame.with_orient(ICRS))
                 .context(OrientationSnafu {
                     action: "transform state dcm",
                 })?
@@ -210,7 +210,7 @@ impl Almanac {
         observer_frame: Frame,
         ab_corr: Option<Aberration>,
     ) -> AlmanacResult<Vector3> {
-        self.unit_vector(SUN_J2000, observer_frame, epoch, ab_corr)
+        self.unit_vector(SUN_ICRS, observer_frame, epoch, ab_corr)
     }
 
     /// Returns the unitary 3D vector between Earth and Sun at desired [Epoch].
@@ -219,6 +219,6 @@ impl Almanac {
         epoch: Epoch,
         ab_corr: Option<Aberration>,
     ) -> AlmanacResult<Vector3> {
-        self.unit_vector(SUN_J2000, EARTH_J2000, epoch, ab_corr)
+        self.unit_vector(SUN_ICRS, EARTH_ICRS, epoch, ab_corr)
     }
 }

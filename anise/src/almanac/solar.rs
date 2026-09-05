@@ -9,7 +9,7 @@
  */
 
 use crate::{
-    NaifId, astro::Aberration, constants::frames::SUN_J2000, ephemerides::EphemerisError,
+    NaifId, astro::Aberration, constants::frames::SUN_ICRS, ephemerides::EphemerisError,
     prelude::Frame,
 };
 
@@ -79,7 +79,7 @@ impl Almanac {
         ab_corr: Option<Aberration>,
     ) -> Result<f64, EphemerisError> {
         let obs_to_sun = self.translate(
-            SUN_J2000,
+            SUN_ICRS,
             Frame::from_ephem_j2000(observer_id),
             epoch,
             ab_corr,
@@ -121,7 +121,7 @@ mod ut_solar {
     use crate::{
         constants::{
             celestial_objects::EARTH,
-            frames::{EARTH_J2000, IAU_EARTH_FRAME, SUN_J2000},
+            frames::{EARTH_ICRS, IAU_EARTH_FRAME, SUN_ICRS},
         },
         prelude::*,
     };
@@ -143,7 +143,7 @@ mod ut_solar {
         let my_sc_j2k = Frame::from_ephem_j2000(sc_id);
 
         // Grab the state in the J2000 frame
-        let state = ctx.transform(my_sc_j2k, EARTH_J2000, epoch, None).unwrap();
+        let state = ctx.transform(my_sc_j2k, EARTH_ICRS, epoch, None).unwrap();
 
         // We'll check at four different points in the orbit
         for epoch in TimeSeries::inclusive(
@@ -156,7 +156,7 @@ mod ut_solar {
                 .unwrap();
             assert_eq!(
                 spe_deg,
-                ctx.sun_angle_deg_from_frame(EARTH_J2000, my_sc_j2k, epoch, Aberration::NONE)
+                ctx.sun_angle_deg_from_frame(EARTH_ICRS, my_sc_j2k, epoch, Aberration::NONE)
                     .unwrap()
             );
 
@@ -177,7 +177,7 @@ mod ut_solar {
             .unwrap();
             // Fetch the state of the sun at this time.
             let sun_state = ctx
-                .transform(SUN_J2000, IAU_EARTH_FRAME, epoch, None)
+                .transform(SUN_ICRS, IAU_EARTH_FRAME, epoch, None)
                 .unwrap();
 
             // Compute the Sun elevation from that point.

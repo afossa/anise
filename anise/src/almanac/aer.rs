@@ -274,7 +274,7 @@ mod ut_aer {
 
     use crate::astro::AzElRange;
     use crate::astro::orbit::Orbit;
-    use crate::constants::frames::{EARTH_ITRF93, EARTH_J2000, IAU_EARTH_FRAME};
+    use crate::constants::frames::{EARTH_ICRS, EARTH_ITRF93, IAU_EARTH_FRAME};
     use crate::math::cartesian::CartesianState;
     use crate::prelude::{Almanac, Epoch};
     use crate::structure::LocationDataSet;
@@ -314,7 +314,7 @@ mod ut_aer {
         let orbit_iau = Orbit::try_latlongalt(0.0, 0.0, 35_786.00, epoch, iau_earth).unwrap();
 
         println!("{orbit_iau:x}");
-        let orbit = almanac.transform_to(orbit_iau, EARTH_J2000, None).unwrap();
+        let orbit = almanac.transform_to(orbit_iau, EARTH_ICRS, None).unwrap();
 
         println!("{orbit:x}");
         assert!(orbit.sma_km().unwrap() >= 0.0);
@@ -339,7 +339,7 @@ mod ut_aer {
             .unwrap();
 
         let iau_earth = almanac.frame_info(IAU_EARTH_FRAME).unwrap();
-        let eme2k = almanac.frame_info(EARTH_J2000).unwrap();
+        let eme2k = almanac.frame_info(EARTH_ICRS).unwrap();
 
         // Now iterate the trajectory to generate the measurements.
         let gmat_ranges_km = [
@@ -632,7 +632,7 @@ mod ut_aer {
                 .unwrap();
         almanac = almanac.with_location_data(loc_data);
 
-        let eme2k = almanac.frame_info(EARTH_J2000).unwrap();
+        let eme2k = almanac.frame_info(EARTH_ICRS).unwrap();
         // Data from another test case
         // Now iterate the trajectory to generate the measurements.
         let gmat_ranges_km = [

@@ -25,31 +25,31 @@ struct Frames {}
 #[pymethods]
 impl Frames {
     #[classattr]
-    const SSB_J2000: Frame = SSB_J2000;
+    const SSB_ICRS: Frame = SSB_ICRS;
     #[classattr]
-    const MERCURY_J2000: Frame = MERCURY_J2000;
+    const MERCURY_ICRS: Frame = MERCURY_ICRS;
     #[classattr]
-    const VENUS_J2000: Frame = VENUS_J2000;
+    const VENUS_ICRS: Frame = VENUS_ICRS;
     #[classattr]
-    const EARTH_MOON_BARYCENTER_J2000: Frame = EARTH_MOON_BARYCENTER_J2000;
+    const EARTH_MOON_BARYCENTER_ICRS: Frame = EARTH_MOON_BARYCENTER_ICRS;
     #[classattr]
-    const MARS_BARYCENTER_J2000: Frame = MARS_BARYCENTER_J2000;
+    const MARS_BARYCENTER_ICRS: Frame = MARS_BARYCENTER_ICRS;
     #[classattr]
-    const JUPITER_BARYCENTER_J2000: Frame = JUPITER_BARYCENTER_J2000;
+    const JUPITER_BARYCENTER_ICRS: Frame = JUPITER_BARYCENTER_ICRS;
     #[classattr]
-    const SATURN_BARYCENTER_J2000: Frame = SATURN_BARYCENTER_J2000;
+    const SATURN_BARYCENTER_ICRS: Frame = SATURN_BARYCENTER_ICRS;
     #[classattr]
-    const URANUS_BARYCENTER_J2000: Frame = URANUS_BARYCENTER_J2000;
+    const URANUS_BARYCENTER_ICRS: Frame = URANUS_BARYCENTER_ICRS;
     #[classattr]
-    const NEPTUNE_BARYCENTER_J2000: Frame = NEPTUNE_BARYCENTER_J2000;
+    const NEPTUNE_BARYCENTER_ICRS: Frame = NEPTUNE_BARYCENTER_ICRS;
     #[classattr]
-    const PLUTO_BARYCENTER_J2000: Frame = PLUTO_BARYCENTER_J2000;
+    const PLUTO_BARYCENTER_ICRS: Frame = PLUTO_BARYCENTER_ICRS;
     #[classattr]
-    const SUN_J2000: Frame = SUN_J2000;
+    const SUN_ICRS: Frame = SUN_ICRS;
     #[classattr]
-    const MOON_J2000: Frame = MOON_J2000;
+    const MOON_ICRS: Frame = MOON_ICRS;
     #[classattr]
-    const EARTH_J2000: Frame = EARTH_J2000;
+    const EARTH_ICRS: Frame = EARTH_ICRS;
     #[classattr]
     const EME2000: Frame = EME2000;
     #[classattr]
@@ -129,11 +129,11 @@ struct Orientations {}
 #[pymethods]
 impl Orientations {
     #[classattr]
-    const J2000: i32 = J2000;
+    const ICRS: i32 = ICRS;
     #[classattr]
     const ECLIPJ2000: i32 = ECLIPJ2000;
     #[classattr]
-    const ICRS: i32 = ICRS;
+    const J2000: i32 = J2000;
     #[classattr]
     const EARTH_MOD: i32 = EARTH_MOD;
     #[classattr]
