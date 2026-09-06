@@ -51,13 +51,39 @@ impl Frames {
     #[classattr]
     const EARTH_ICRS: Frame = EARTH_ICRS;
     #[classattr]
-    const EME2000: Frame = EME2000;
-    #[classattr]
-    const EARTH_ECLIPJ2000: Frame = EARTH_ECLIPJ2000;
+    const ICRF: Frame = ICRF;
     #[classattr]
     const GCRF: Frame = GCRF;
     #[classattr]
-    const ICRF: Frame = ICRF;
+    const SSB_J2000: Frame = SSB_J2000;
+    #[classattr]
+    const MERCURY_J2000: Frame = MERCURY_J2000;
+    #[classattr]
+    const VENUS_J2000: Frame = VENUS_J2000;
+    #[classattr]
+    const EARTH_MOON_BARYCENTER_J2000: Frame = EARTH_MOON_BARYCENTER_J2000;
+    #[classattr]
+    const MARS_BARYCENTER_J2000: Frame = MARS_BARYCENTER_J2000;
+    #[classattr]
+    const JUPITER_BARYCENTER_J2000: Frame = JUPITER_BARYCENTER_J2000;
+    #[classattr]
+    const SATURN_BARYCENTER_J2000: Frame = SATURN_BARYCENTER_J2000;
+    #[classattr]
+    const URANUS_BARYCENTER_J2000: Frame = URANUS_BARYCENTER_J2000;
+    #[classattr]
+    const NEPTUNE_BARYCENTER_J2000: Frame = NEPTUNE_BARYCENTER_J2000;
+    #[classattr]
+    const PLUTO_BARYCENTER_J2000: Frame = PLUTO_BARYCENTER_J2000;
+    #[classattr]
+    const SUN_J2000: Frame = SUN_J2000;
+    #[classattr]
+    const MOON_J2000: Frame = MOON_J2000;
+    #[classattr]
+    const EARTH_J2000: Frame = EARTH_J2000;
+    #[classattr]
+    const EME2000: Frame = EME2000;
+    #[classattr]
+    const EARTH_ECLIPJ2000: Frame = EARTH_ECLIPJ2000;
     #[classattr]
     const IAU_MERCURY_FRAME: Frame = IAU_MERCURY_FRAME;
     #[classattr]
