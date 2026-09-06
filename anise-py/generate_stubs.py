@@ -428,7 +428,7 @@ def function_stub(
             is_static,
             is_class,
         ),
-        body or [ast.Constant(EllipsisType())],
+        body or [ast.Constant(value=Ellipsis)],
         decorator_list=decorator_list,
         returns=(
             returns_stub(fn_name, doc or "", element_path, types_to_import, in_class)

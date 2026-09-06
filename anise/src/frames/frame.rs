@@ -721,4 +721,30 @@ mod frame_ut {
         );
         assert_eq!(format!("{MARS_INERTIAL_FRAME}"), "Mars inertial @ J2000");
     }
+
+    #[test]
+    fn orientation_id_from_frame_id() {
+        use crate::constants::frames::{
+            EARTH_ICRS, EARTH_J2000, EARTH_MOON_BARYCENTER_ICRS, EARTH_MOON_BARYCENTER_J2000, GCRF,
+            ICRF, SSB_ICRS, SSB_J2000,
+        };
+        use crate::constants::orientations::{ICRS, J2000};
+
+        assert_eq!(ICRF.orient_origin_id_match(ICRS), true);
+        assert_eq!(SSB_ICRS.orient_origin_id_match(ICRS), true);
+        assert_eq!(SSB_J2000.orient_origin_id_match(J2000), true);
+
+        assert_eq!(GCRF.orient_origin_id_match(ICRS), true);
+        assert_eq!(EARTH_ICRS.orient_origin_id_match(ICRS), true);
+        assert_eq!(EARTH_J2000.orient_origin_id_match(J2000), true);
+
+        assert_eq!(
+            EARTH_MOON_BARYCENTER_ICRS.orient_origin_id_match(ICRS),
+            true
+        );
+        assert_eq!(
+            EARTH_MOON_BARYCENTER_J2000.orient_origin_id_match(J2000),
+            true
+        );
+    }
 }

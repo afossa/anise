@@ -47,10 +47,10 @@ impl Almanac {
         }
 
         if source.orient_origin_id_match(ICRS) {
-            // The parent of Earth ecliptic J2000 is the J2000 inertial frame.
+            // The parent of the ICRS inertial frame is itself.
             return Ok(DCM::identity(ICRS, ICRS));
         } else if source.orient_origin_id_match(ECLIPJ2000) {
-            // The parent of Earth ecliptic J2000 is the J2000 inertial frame.
+            // The parent of Earth ecliptic J2000 is the ICRS inertial frame.
             return Ok(DCM {
                 rot_mat: r1(J2000_TO_ECLIPJ2000_ANGLE_RAD),
                 rot_mat_dt: None,

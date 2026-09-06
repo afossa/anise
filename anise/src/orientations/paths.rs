@@ -70,7 +70,7 @@ impl Almanac {
         }
 
         if common_center == ECLIPJ2000 || common_center == J2000 {
-            // Rotation from ecliptic J2000 / ICRS to J2000 is embedded.
+            // Rotation from ecliptic J2000 / J2000 to ICRS is embedded.
             common_center = ICRS;
         }
 

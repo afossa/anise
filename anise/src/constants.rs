@@ -130,7 +130,8 @@ pub mod celestial_objects {
 pub mod orientations {
     use crate::{NaifId, orientations::OrientationError};
 
-    /// Earth mean equator, dynamical equinox of J2000. The root reference frame for SPICE.
+    /// ICRS orientation axes (International Celestial Reference System).
+    /// The root reference frame for SPICE, where it is called J2000.
     pub const ICRS: NaifId = 1;
     /// Earth mean equator, dynamical equinox of B1950.
     /// The B1950 reference frame is obtained by precessing the J2000 frame backwards from Julian year 2000 to Besselian year 1950, using the 1976 IAU precession model.
@@ -233,12 +234,12 @@ pub mod orientations {
     /// The DE-403 frame is treated as equivalent to the J2000 frame.
     pub const DE143: NaifId = 21;
 
-    /// ICRS orientation axes (International Celestial Reference System).
+    /// Earth mean equator, dynamical equinox of J2000 (EME2000).
     ///
-    /// Related to J2000 (EME2000) by the IERS 2006 frame bias of ~23 mas
+    /// Related to ICRS by the IERS 2000 frame bias of ~23 mas
     /// (~0.7 m at Earth's surface). ID 22 is the next sequential ID after
     /// the SPICE built-in inertial frames (1-21); SPICE itself does not
-    /// define a separate ICRS orientation.
+    /// define a separate J2000 orientation.
     pub const J2000: NaifId = 22;
 
     /// SOFA `iauBi00` longitude bias, arcseconds.
@@ -383,9 +384,13 @@ pub mod frames {
 
     use super::{celestial_objects::*, orientations::*};
 
+    /// Reference frames aligned with ICRS axes
     pub const SSB_ICRS: Frame = Frame::new(SOLAR_SYSTEM_BARYCENTER, ICRS);
+    pub const SUN_ICRS: Frame = Frame::new(SUN, ICRS);
     pub const MERCURY_ICRS: Frame = Frame::new(MERCURY_BARYCENTER, ICRS);
     pub const VENUS_ICRS: Frame = Frame::new(VENUS_BARYCENTER, ICRS);
+    pub const EARTH_ICRS: Frame = Frame::new(EARTH, ICRS);
+    pub const MOON_ICRS: Frame = Frame::new(MOON, ICRS);
     pub const EARTH_MOON_BARYCENTER_ICRS: Frame = Frame::new(EARTH_MOON_BARYCENTER, ICRS);
     /// The Mars frame is not available in the standard DE files, and requires a Mars specific BSP.
     pub const MARS_ICRS: Frame = Frame::new(MARS, ICRS);
@@ -395,15 +400,31 @@ pub mod frames {
     pub const URANUS_BARYCENTER_ICRS: Frame = Frame::new(URANUS_BARYCENTER, ICRS);
     pub const NEPTUNE_BARYCENTER_ICRS: Frame = Frame::new(NEPTUNE_BARYCENTER, ICRS);
     pub const PLUTO_BARYCENTER_ICRS: Frame = Frame::new(PLUTO_BARYCENTER, ICRS);
-    pub const SUN_ICRS: Frame = Frame::new(SUN, ICRS);
-    pub const MOON_ICRS: Frame = Frame::new(MOON, ICRS);
-    pub const EARTH_ICRS: Frame = Frame::new(EARTH, ICRS);
-    pub const EME2000: Frame = Frame::new(EARTH, J2000);
-    pub const EARTH_ECLIPJ2000: Frame = Frame::new(EARTH, ECLIPJ2000);
-    /// Geocentric Celestial Reference Frame (Earth-centered, ICRS axes).
-    pub const GCRF: Frame = Frame::new(EARTH, ICRS);
     /// International Celestial Reference Frame (SSB-centered, ICRS axes).
     pub const ICRF: Frame = Frame::new(SOLAR_SYSTEM_BARYCENTER, ICRS);
+    /// Geocentric Celestial Reference Frame (Earth-centered, ICRS axes).
+    pub const GCRF: Frame = Frame::new(EARTH, ICRS);
+
+    /// Reference frames aligned with J2000 axes
+    pub const SSB_J2000: Frame = Frame::new(SOLAR_SYSTEM_BARYCENTER, J2000);
+    pub const SUN_J2000: Frame = Frame::new(SUN, J2000);
+    pub const MERCURY_J2000: Frame = Frame::new(MERCURY_BARYCENTER, J2000);
+    pub const VENUS_J2000: Frame = Frame::new(VENUS_BARYCENTER, J2000);
+    pub const EARTH_J2000: Frame = Frame::new(EARTH, J2000);
+    pub const MOON_J2000: Frame = Frame::new(MOON, J2000);
+    pub const EARTH_MOON_BARYCENTER_J2000: Frame = Frame::new(EARTH_MOON_BARYCENTER, J2000);
+    /// The Mars frame is not available in the standard DE files, and requires a Mars specific BSP.
+    pub const MARS_J2000: Frame = Frame::new(MARS, J2000);
+    pub const MARS_BARYCENTER_J2000: Frame = Frame::new(MARS_BARYCENTER, J2000);
+    pub const JUPITER_BARYCENTER_J2000: Frame = Frame::new(JUPITER_BARYCENTER, J2000);
+    pub const SATURN_BARYCENTER_J2000: Frame = Frame::new(SATURN_BARYCENTER, J2000);
+    pub const URANUS_BARYCENTER_J2000: Frame = Frame::new(URANUS_BARYCENTER, J2000);
+    pub const NEPTUNE_BARYCENTER_J2000: Frame = Frame::new(NEPTUNE_BARYCENTER, J2000);
+    pub const PLUTO_BARYCENTER_J2000: Frame = Frame::new(PLUTO_BARYCENTER, J2000);
+    /// Earth Mean Equator and Mean Equinox of the J2000 epoch
+    pub const EME2000: Frame = Frame::new(EARTH, J2000);
+
+    pub const EARTH_ECLIPJ2000: Frame = Frame::new(EARTH, ECLIPJ2000);
 
     /// Body fixed IAU rotation
     pub const IAU_MERCURY_FRAME: Frame = Frame::new(MERCURY, IAU_MERCURY);
