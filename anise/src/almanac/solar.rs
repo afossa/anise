@@ -38,7 +38,7 @@ impl Almanac {
     /// ## Sunrise at nadir
     /// ```text
     /// Sun
-    ///  |  \      
+    ///  |  \
     ///  |   \
     ///  |    \
     ///  Obs. -- Target
@@ -46,7 +46,7 @@ impl Almanac {
     /// ## Sun high at nadir
     /// ```text
     /// Sun
-    ///  \        
+    ///  \
     ///   \  __ θ > 90
     ///    \     \
     ///     Obs. ---------- Target
@@ -55,7 +55,7 @@ impl Almanac {
     /// ## Sunset at nadir
     /// ```text
     ///          Sun
-    ///        /  
+    ///        /
     ///       /  __ θ < 90
     ///      /    /
     ///  Obs. -- Target
@@ -80,13 +80,13 @@ impl Almanac {
     ) -> Result<f64, EphemerisError> {
         let obs_to_sun = self.translate(
             SUN_ICRS,
-            Frame::from_ephem_j2000(observer_id),
+            Frame::from_ephem_icrs(observer_id),
             epoch,
             ab_corr,
         )?;
         let obs_to_target = self.translate(
-            Frame::from_ephem_j2000(target_id),
-            Frame::from_ephem_j2000(observer_id),
+            Frame::from_ephem_icrs(target_id),
+            Frame::from_ephem_icrs(observer_id),
             epoch,
             ab_corr,
         )?;
@@ -140,7 +140,7 @@ mod ut_solar {
 
         let sc_id = -10000001;
 
-        let my_sc_j2k = Frame::from_ephem_j2000(sc_id);
+        let my_sc_j2k = Frame::from_ephem_icrs(sc_id);
 
         // Grab the state in the J2000 frame
         let state = ctx.transform(my_sc_j2k, EARTH_ICRS, epoch, None).unwrap();

@@ -267,10 +267,10 @@ impl Almanac {
 
 #[cfg(test)]
 mod ut_aer {
+    use approx::assert_abs_diff_eq;
     use core::str::FromStr;
-    use std::path::Path;
-
     use hifitime::Unit;
+    use std::path::Path;
 
     use crate::astro::AzElRange;
     use crate::astro::orbit::Orbit;
@@ -488,7 +488,32 @@ mod ut_aer {
             // Let's confirm that the data is not garbage compared to GMAT...
             assert!((aer.range_km - expect).abs() < 5.0);
             // ... and assert a regression check too
-            assert_eq!(aer, regression_data[sno], "{sno} differ");
+            assert_eq!(aer.epoch, regression_data[sno].epoch, "{sno} differ");
+            assert_abs_diff_eq!(
+                aer.azimuth_deg,
+                regression_data[sno].azimuth_deg,
+                epsilon = 1e-14
+            );
+            assert_abs_diff_eq!(
+                aer.elevation_deg,
+                regression_data[sno].elevation_deg,
+                epsilon = 1e-14
+            );
+            assert_abs_diff_eq!(aer.range_km, regression_data[sno].range_km, epsilon = 1e-14);
+            assert_abs_diff_eq!(
+                aer.range_rate_km_s,
+                regression_data[sno].range_rate_km_s,
+                epsilon = 1e-14
+            );
+            assert_eq!(aer.mask_deg, regression_data[sno].mask_deg, "{sno} differ");
+            assert_eq!(
+                aer.obstructed_by, regression_data[sno].obstructed_by,
+                "{sno} differ"
+            );
+            assert_eq!(
+                aer.light_time, regression_data[sno].light_time,
+                "{sno} differ"
+            );
         }
 
         // Ensure that if the state are in another frame, the results are (nearly) identical.

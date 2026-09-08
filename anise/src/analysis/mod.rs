@@ -551,7 +551,7 @@ mod ut_analysis {
         // The one-way light time from a ground location is just the range to that
         // location divided by the speed of light, so the two expressions must agree.
         let state = StateSpec {
-            target_frame: FrameSpec::Loaded(Frame::from_ephem_j2000(-85)),
+            target_frame: FrameSpec::Loaded(Frame::from_ephem_icrs(-85)),
             observer_frame: FrameSpec::Loaded(EME2000),
             ab_corr: Aberration::NONE,
         };
@@ -597,7 +597,7 @@ mod ut_analysis {
     fn test_analysis_event(mut almanac: Almanac) {
         use crate::analysis::event_ops::find_arc_intersections;
 
-        let lro_frame = Frame::from_ephem_j2000(-85);
+        let lro_frame = Frame::from_ephem_icrs(-85);
 
         let lro_state_spec = StateSpec {
             target_frame: FrameSpec::Loaded(lro_frame),

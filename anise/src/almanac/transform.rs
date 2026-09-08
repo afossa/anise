@@ -107,7 +107,7 @@ impl Almanac {
         epoch: Epoch,
         ab_corr: Option<Aberration>,
     ) -> AlmanacResult<CartesianState> {
-        self.transform(Frame::from_ephem_j2000(object), observer, epoch, ab_corr)
+        self.transform(Frame::from_ephem_icrs(object), observer, epoch, ab_corr)
     }
 
     /// Alias fo SPICE's `spkezr` where the inputs must be the NAIF IDs of the objects and frames with the caveat that the aberration is moved to the last positional argument.
@@ -119,8 +119,8 @@ impl Almanac {
         observer: NaifId,
         ab_corr: Option<Aberration>,
     ) -> AlmanacResult<CartesianState> {
-        let tgt_j2000 = Frame::from_ephem_j2000(target);
-        let obs_j2000 = Frame::from_ephem_j2000(observer);
+        let tgt_j2000 = Frame::from_ephem_icrs(target);
+        let obs_j2000 = Frame::from_ephem_icrs(observer);
 
         // Translate in J2000
         let state = self

@@ -173,36 +173,3 @@ impl Almanac {
         }
     }
 }
-
-#[cfg(test)]
-mod rotate_to_parent_ut {
-    use crate::almanac::Almanac;
-    use crate::constants::{
-        frames::EME2000,
-        orientations::{ICRS, J2000},
-    };
-    use approx::assert_abs_diff_eq;
-    use hifitime::Epoch;
-    use sofars::pnp::bp00;
-
-    #[test]
-    fn test_eme2000_bias() {
-        let almanac = Almanac::default();
-        let epoch = Epoch::default();
-        let dcm = almanac.rotation_to_parent(EME2000, epoch).unwrap();
-
-        // from SOFA's iauBp00 documentation:
-        // The matrix rb transforms vectors from GCRS to mean J2000.0 by applying frame bias.
-        let (bias, _, _) = bp00(0.0, 0.0);
-
-        for i in 0..3 {
-            for j in 0..3 {
-                assert_abs_diff_eq!(dcm.rot_mat[(i, j)], bias[i][j], epsilon = f64::EPSILON);
-            }
-        }
-
-        assert_eq!(dcm.rot_mat_dt, None);
-        assert_eq!(dcm.from, ICRS);
-        assert_eq!(dcm.to, J2000);
-    }
-}

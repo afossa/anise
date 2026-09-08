@@ -1,5 +1,3 @@
-use std::path::PathBuf;
-
 use anise::constants::frames::{
     EARTH_ICRS, EARTH_ITRF93, EME2000, GCRF, IAU_JUPITER_FRAME, IAU_MOON_FRAME,
     JUPITER_BARYCENTER_ICRS, MOON_ICRS, MOON_ME_DE440_ME421_FRAME, MOON_PA_DE421_FRAME,
@@ -12,6 +10,7 @@ use anise::constants::usual_planetary_constants::MEAN_EARTH_ANGULAR_VELOCITY_DEG
 use anise::math::rotation::{DCM, EulerParameter};
 use anise::math::{Matrix3, Vector3};
 use anise::naif::kpl::parser::convert_tpc;
+use std::path::PathBuf;
 
 use anise::f64_eq_tol;
 use anise::structure::PlanetaryDataSet;
@@ -627,29 +626,31 @@ fn icrs_chain_to_itrf93_differs_from_j2000_by_bias() {
 #[cfg(feature = "validation")]
 #[test]
 fn icrs_matches_sofa_iaubp00() {
-    use anise::constants::frames::{EME2000, GCRF};
+    use anise::constants::{
+        frames::{EME2000, GCRF},
+        orientations::J2000,
+    };
     use core::str::FromStr;
 
     let almanac = Almanac::default().load("../data/pck11.pca").unwrap();
     let epoch = Epoch::from_str("2020-06-15T12:00:00 TDB").unwrap();
 
-    // SOFA bp00 returns (rb, rp, rbp). We want rb (the bias-only matrix).
-    // At J2000.0 TT the bias matrix is time-independent.
+    // SOFA bp00 returns (rb, rp, rbp). We want rb (the bias-only matrix)
+    // which transforms vectors from GCRS to mean J2000.0 by applying
+    // frame bias. The matrix is time independent.
     let (rb, _rp, _rbp) = sofars::pnp::bp00(2451545.0, 0.0);
 
-    let dcm = almanac.rotate(EME2000, GCRF, epoch).unwrap();
+    let dcm = almanac.rotate(GCRF, EME2000, epoch).unwrap();
 
     for i in 0..3 {
         for j in 0..3 {
-            let err = (dcm.rot_mat[(i, j)] - rb[i][j]).abs();
-            assert!(
-                err < 1e-14,
-                "B[{i}][{j}]: anise={a:.18e}, sofa={s:.18e}, err={err:.3e}",
-                a = dcm.rot_mat[(i, j)],
-                s = rb[i][j],
-            );
+            assert_abs_diff_eq!(dcm.rot_mat[(i, j)], rb[i][j], epsilon = f64::EPSILON);
         }
     }
+
+    assert_eq!(dcm.rot_mat_dt, None);
+    assert_eq!(dcm.from, ICRS);
+    assert_eq!(dcm.to, J2000);
 }
 
 #[test]

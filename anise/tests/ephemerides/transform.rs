@@ -225,7 +225,7 @@ fn validate_gh_283_multi_barycenter_and_los(almanac: Almanac) {
     let almanac = almanac.load(spk_path).unwrap();
 
     const LRO_ID: i32 = -85;
-    let lro_frame = Frame::from_ephem_j2000(LRO_ID);
+    let lro_frame = Frame::from_ephem_icrs(LRO_ID);
 
     // Load into SPICE
     spice::furnsh(spk_path);

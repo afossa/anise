@@ -79,7 +79,7 @@ impl Frame {
         }
     }
 
-    pub const fn from_ephem_j2000(ephemeris_id: NaifId) -> Self {
+    pub const fn from_ephem_icrs(ephemeris_id: NaifId) -> Self {
         Self::new(ephemeris_id, ICRS)
     }
 

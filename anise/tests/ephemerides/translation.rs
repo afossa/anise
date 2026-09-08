@@ -305,7 +305,7 @@ fn type13_hermite_verif() {
 
     let epoch = Epoch::from_gregorian_hms(2000, 1, 1, 14, 0, 0, TimeScale::UTC);
 
-    let my_sc_j2k = Frame::from_ephem_j2000(-10000001);
+    let my_sc_j2k = Frame::from_ephem_icrs(-10000001);
 
     let state = ctx
         .translate_geometric(my_sc_j2k, EARTH_ICRS, epoch)
@@ -645,7 +645,7 @@ fn type9_lagrange_query() {
         .unwrap();
 
     let obj_id = -10000001;
-    let obj_frame = Frame::from_ephem_j2000(obj_id);
+    let obj_frame = Frame::from_ephem_icrs(obj_id);
 
     let (start, end) = almanac.spk_domain(obj_id).unwrap();
 
